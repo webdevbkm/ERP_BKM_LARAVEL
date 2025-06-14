@@ -1,0 +1,28 @@
+# Compiled frontend assets
+/public/build
+/public/hot
+
+# Node dependency directory
+/node_modules
+
+# PHP dependency directory
+/vendor
+
+# Log files
+/storage/logs
+*.log
+
+# Environment files
+.env
+.env.backup
+
+# IDE and OS files
+.idea
+.vscode
+.DS_Store
+
+# Laravel-specific files
+/storage/framework/cache/data/
+/storage/framework/sessions/
+/storage/framework/testing/
+/storage/framework/views/
