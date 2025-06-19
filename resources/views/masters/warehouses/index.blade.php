@@ -1,0 +1,48 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="h4 fw-bold mb-0">Manajemen Master: Gudang</h2>
+    </x-slot>
+    <div class="py-5">
+        <div class="container">
+            @if (session('success')) <div class="alert alert-success">{{ session('success') }}</div> @endif
+            @if (session('error')) <div class="alert alert-danger">{{ session('error') }}</div> @endif
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0"><i class="bi bi-shop me-2"></i>Daftar Gudang</h3>
+                    <a href="{{ route('master.warehouses.create') }}" class="btn btn-light"><i class="bi bi-plus-circle me-1"></i> Tambah Gudang Baru</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr><th>Kode</th><th>Nama Gudang</th><th>Alamat</th><th>Status</th><th class="text-end">Aksi</th></tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($warehouses as $warehouse)
+                                    <tr>
+                                        <td class="fw-bold">{{ $warehouse->code }}</td>
+                                        <td>{{ $warehouse->name }}</td>
+                                        <td>{{ $warehouse->address ?? '-' }}</td>
+                                        <td>
+                                            @if ($warehouse->is_active) <span class="badge bg-success">Aktif</span> @else <span class="badge bg-secondary">Tidak Aktif</span> @endif
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="{{ route('master.warehouses.edit', $warehouse->id) }}" class="btn btn-sm btn-secondary">Edit</a>
+                                            <form action="{{ route('master.warehouses.destroy', $warehouse->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus?');">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr><td colspan="5" class="text-center">Tidak ada data gudang.</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-3">{{ $warehouses->links() }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
